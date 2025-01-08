@@ -1,0 +1,93 @@
+:root{
+
+    --pixel-size:1;
+}
+
+body {
+    background: lightblue;
+}
+
+.Character {
+    width: calc(64px * var(--pixel-size)); /* Match the frame size */
+    height: calc(64px * var(--pixel-size)); /* Match the frame size */
+    overflow: hidden; /* Hide the overflow */
+    position: relative; /* Make this the reference point for absolute positioning */
+    top: 350px; /* Ensure alignment with .Character */
+    left: 100px; /* Ensure alignment with .Character */
+    /* background: rebeccapurple; */
+}
+
+.Character_spritesheet {
+    width: calc(576px * var(--pixel-size));
+    position: absolute;
+}
+
+.pixelart {
+    image-rendering: pixelated;
+ }
+
+ .standing {
+    top: calc(0px * var(--pixel-size));
+    animation: standingSprite 1s steps(3) infinite;
+ }
+ @keyframes standingSprite {
+    0% {
+        transform: translate3d(0, 0, 0); /* Start at the first sprite */
+    }
+    100% {
+        transform: translate3d(-192px, 0, 0); /* Move across 3 frames (192px) */
+    }
+}
+ 
+ .walk-right {
+    top: calc(-64px * var(--pixel-size));
+    animation: walkingSprite 1s steps(9) infinite;
+ }
+
+ .walk-left {
+    top: calc(-128px * var(--pixel-size));
+    animation: walkingSprite 1s steps(9) infinite;
+ }
+
+@keyframes walkingSprite {
+    0% {
+       transform: translate3d(0, 0, 0); /* Start at the first sprite */
+    }
+    100% {
+       transform: translate3d(-100%, 0, 0); /* Reset to the start */
+    }
+ }
+
+ .row-right {
+    top: calc(-192px * var(--pixel-size));
+    animation: rowSprite 1s steps(8) infinite;
+ }
+
+ .row-left {
+    top: calc(-256px * var(--pixel-size));
+    animation: rowSprite 1s steps(8) infinite;
+ }
+
+@keyframes rowSprite {
+    0% {
+       transform: translate3d(0, 0, 0); /* Start at the first sprite */
+    }
+    100% {
+       transform: translate3d(-512px, 0, 0); /* Reset to the start */
+    }
+ }
+
+ .pointing {
+    top: calc(-320px * var(--pixel-size));
+    animation: pointing 1s steps(6) infinite;
+ }
+
+@keyframes pointing {
+    0% {
+       transform: translate3d(0, 0, 0); /* Start at the first sprite */
+    }
+    100% {
+       transform: translate3d(-384px, 0, 0); /* Reset to the start */
+    }
+ }
+ 
