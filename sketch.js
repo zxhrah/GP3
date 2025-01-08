@@ -74,22 +74,82 @@ document.addEventListener("keyup", (e) => {
    }
 });
 
-
+// p5.js setup and draw loop/////////////////////////////////////////////////////////////
+// Variables
 var floorPos_y;
-// p5.js setup and draw loop
-function setup() {
-    createCanvas(1024, 450); 
-    floorPos_y = height * 3/4;
- }
- 
- function draw() {
-    background(100,155,255); //fill the sky blue
-    noStroke();
-    fill(0,155,0);
-    rect(0, floorPos_y, width, height/2); //draw some green ground
-    
-    if (x < 90){
+var trees_x;
+var treePos_y;
+let cloudImage; // Variable to store the loaded cloud image
+let clouds; // Array to store cloud data
 
+function preload() {
+    cloudImage = loadImage('assets/clouds.png'); // Load the cloud image
+}
+
+function setup() {
+    createCanvas(1024, 450);
+    floorPos_y = height * 3 / 4;
+
+    // Tree positions
+    trees_x = [-700, -300, -50, 110, 370, 900, 1200, 1400, 1600, 1770, 1930, 2200, 2800, 3000, 3300, 3770, 4540];
+
+    // Cloud data
+    clouds = [
+        { x: -800, y: 100, size: 85 },
+        { x: -500, y: 100, size: 65 },
+        { x: -200, y: 130, size: 90 },
+        { x: 85, y: 100, size: 85 },
+        { x: 350, y: 150, size: 50 },
+        { x: 650, y: 100, size: 90 },
+        // Add more clouds as needed...
+    ];
+
+    // Set tree's vertical position
+    treePos_y = floorPos_y - 142; // Set to place trees on the ground level
+}
+
+function draw() {
+    background(100, 155, 255); // Fill the sky blue
+    noStroke();
+    fill(0, 155, 0);
+    rect(0, floorPos_y, width, height / 2); // Draw the ground
+    
+    push()
+    translate(-x, 0)
+    // Draw the trees
+    for (var i = 0; i < trees_x.length; i++) {
+        noStroke();
+        fill(69, 55, 34);
+        rect(trees_x[i], treePos_y, 40, 142); // Tree trunk
+        // Leaves 1 - middle tree
+        noStroke();
+        fill(30, 61, 35);
+        ellipse(trees_x[i] + 25, treePos_y + 20, 60, 70);
+        noStroke();
+        fill(36, 69, 34);
+        ellipse(trees_x[i] - 20, treePos_y + 30, 100);
+        ellipse(trees_x[i] + 50, treePos_y + 50, 75);
     }
- }
- 
+
+    // Draw the clouds using the image
+    for (let i = 0; i < clouds.length; i++) {
+        let cloud = clouds[i];
+        cloud.x -= 1; // Move the cloud leftward
+        if (cloud.x < -200) {
+            cloud.x = width + 100; // Reset position when off-screen
+        }
+        image(cloudImage, cloud.x, cloud.y, cloud.size * 2, cloud.size); // Draw cloud image
+    }
+    pop()
+    // Optional: Example of a moving object, if you want to add movement (e.g., a character)
+    if (x < 90) {
+        x = 90; // Prevent the character from going past the starting point
+        fill(255); // Display the message if the character tries to go left beyond the blocker
+        stroke(255);
+        strokeWeight(5);
+        fill(196, 88, 99);
+        textSize(75);
+        noStroke();
+        text('---->', x + 200, floorPos_y - 100);
+    }
+}
