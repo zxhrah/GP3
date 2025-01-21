@@ -13,7 +13,7 @@ body {
     overflow: hidden; /* Hide the overflow */
     position: relative; /* Make this the reference point for absolute positioning */
     top: 350px; /* Ensure alignment with .Character */
-    left: 100px; /* Ensure alignment with .Character */
+    left: 40vw; /* Ensure alignment with .Character */
     /* background: rebeccapurple; */
 }
 

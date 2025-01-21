@@ -2,10 +2,11 @@ var character = document.querySelector(".Character"); // Updated class name
 var characterFace = document.querySelector(".Character img"); // Targeting the img tag
 
 // Starting position of the character
-var x = 90;
+var x = 512;
 var y = 34;
 var held_directions = []; // State of which arrow keys we are holding down
-var speed = 1; // How fast the character moves in pixels per frame
+var right_direction;
+var left_direction;
 
 const placeCharacter = () => {
    var pixelSize = parseInt(
@@ -16,22 +17,27 @@ const placeCharacter = () => {
     // Handle movement and sprite animation for right and left directions
     if (held_direction) {
         if (held_direction === directions.right) {
-           x += speed; // Move the character to the right
+            right_direction = true;
+            left_direction = false;
            characterFace.classList.remove('walk-left'); // Remove walk-left if moving right
            characterFace.classList.add('walk-right');  // Add walk-right when moving right
         } else if (held_direction === directions.left) {
-           x -= speed; // Move the character to the left
+         right_direction = false;
+            left_direction = true;
            characterFace.classList.remove('walk-right'); // Remove walk-right if moving left
+
            characterFace.classList.add('walk-left');  // Add walk-left when moving left
         }
      } else {
         // No direction, character is standing
+        right_direction = false;
+        left_direction = false;
         characterFace.classList.remove('walk-right', 'walk-left');
         characterFace.classList.add('standing'); // Add standing class if no key is pressed
      }
   
      // Update character position on screen to move left and right
-     character.style.transform = `translate3d(${x * pixelSize}px, ${y * pixelSize}px, 0)`;
+     //character.style.transform = `translate3d(${x * pixelSize}px, ${y * pixelSize}px, 0)`; //turned off to test - REMOVE LATER
   }
   
 
@@ -80,7 +86,11 @@ var floorPos_y;
 var trees_x;
 var treePos_y;
 let cloudImage; // Variable to store the loaded cloud image
-let clouds; // Array to store cloud data
+let clouds = [];  // Array to store cloud data
+let transitionPositions = [1800, 4000, 6200]; // Starting x-positions for 3 transitions
+let transitionWidth = 1024; // Width of each transition area
+let transitioning = false; // Flag for transition state
+
 
 function preload() {
     cloudImage = loadImage('assets/clouds.png'); // Load the cloud image
@@ -89,20 +99,19 @@ function preload() {
 function setup() {
     createCanvas(1024, 450);
     floorPos_y = height * 3 / 4;
-
+   right_direction = false;
+   left_direction = false;
     // Tree positions
-    trees_x = [-700, -300, -50, 110, 370, 900, 1200, 1400, 1600, 1770, 1930, 2200, 2800, 3000, 3300, 3770, 4540];
+    trees_x = [-700, -300, -50, 110, 370, 900, 1200, 1400, 1600, 1770, 1930, 2200, 2800, 3000, 3300, 3770, 4540, 5540,5770, 6770, 7100, 7300, 7400 ];
 
-    // Cloud data
-    clouds = [
-        { x: -800, y: 100, size: 85 },
-        { x: -500, y: 100, size: 65 },
-        { x: -200, y: 130, size: 90 },
-        { x: 85, y: 100, size: 85 },
-        { x: 350, y: 150, size: 50 },
-        { x: 650, y: 100, size: 90 },
-        // Add more clouds as needed...
-    ];
+   // Initialize clouds with positions far off-screen
+   for (let i = 0; i < 250; i++) { // Generate 15 clouds
+      clouds.push({
+          x: i * 200, // Spread clouds at regular intervals far along the x-axis
+          y: random(0, 100), // Fixed vertical range for clouds
+          size: random(50, 200) // Random sizes within a range
+      });
+  }
 
     // Set tree's vertical position
     treePos_y = floorPos_y - 142; // Set to place trees on the ground level
@@ -111,11 +120,41 @@ function setup() {
 function draw() {
     background(100, 155, 255); // Fill the sky blue
     noStroke();
-    fill(0, 155, 0);
+    fill(168, 121, 91);
     rect(0, floorPos_y, width, height / 2); // Draw the ground
     
     push()
-    translate(-x, 0)
+    translate(-x, 0);  // Adjust background scroll based on x position
+   // Narration Texts
+   //Scene 1
+   fill(255);
+   textSize(12);
+   noStroke();
+   text('The story begins in Moulvibazar, Bangladesh.', 522 , floorPos_y - 90);
+   text('The village experiences a heavy downpour, more than usual,', 522 , floorPos_y - 60);
+   text('that turned familiar dirt paths into streams of water', 522 , floorPos_y - 30);
+
+   //Scene 2
+   fill(255);
+   textSize(12);
+   noStroke();
+   text('The fishing ponds overflowed and flooded the roads.', 3400 , floorPos_y - 90);
+   text('The fish had now claimed our streets,', 3400 , floorPos_y - 60);
+   text('so residents cast nets everywhere to catch them.', 3400 , floorPos_y - 30);
+   //Scene 3
+   fill(255);
+   textSize(12);
+   noStroke();
+   text('The floods reached the fields.', 5100 , floorPos_y - 90);
+   text('Crops were swallowed by the water,', 5100 , floorPos_y - 60);
+   text('while the cattle wandered in it knee deep.', 5100 , floorPos_y - 30);
+   //Scene 4
+   fill(255);
+   textSize(12);
+   noStroke();
+   text('The roads eventually disappeared and the water was surrounding us.', 7500 , floorPos_y - 90);
+   text('Boats became our only means of travel forcing us to reshape our lives.', 7500 , floorPos_y - 60);
+   text('As I floated past half-submerged homes I wondered ', 7500 , floorPos_y - 30);
     // Draw the trees
     for (var i = 0; i < trees_x.length; i++) {
         noStroke();
@@ -131,25 +170,54 @@ function draw() {
         ellipse(trees_x[i] + 50, treePos_y + 50, 75);
     }
 
-    // Draw the clouds using the image
-    for (let i = 0; i < clouds.length; i++) {
-        let cloud = clouds[i];
-        cloud.x -= 1; // Move the cloud leftward
-        if (cloud.x < -200) {
-            cloud.x = width + 100; // Reset position when off-screen
-        }
-        image(cloudImage, cloud.x, cloud.y, cloud.size * 2, cloud.size); // Draw cloud image
+   // Draw the clouds using the image
+   for (let i = 0; i < clouds.length; i++) {
+      let cloud = clouds[i];
+      cloud.x -= 1; // Move the cloud leftward
+      if (cloud.x < -cloud.size * 2) { // Check if the cloud is completely off-screen
+          cloud.x += width + 8000; // Reset far off to the right, ensuring consistent flow
+      }
+      image(cloudImage, cloud.x, cloud.y, cloud.size * 2, cloud.size); // Draw cloud image
+  }
+
+// Draw and handle multiple transitions
+transitioning = false; // Reset transition flag for each frame
+for (let i = 0; i < transitionPositions.length; i++) {
+    let transitionX = transitionPositions[i]; // Current transition's x-position
+
+    // Draw the transition rectangle
+    fill(0, 0, 0); // Semi-transparent black for the transition effect
+    rect(transitionX, 0, transitionWidth, height);
+
+    // Check if the character is within the current transition area
+    if (x >= transitionX - 550 && x < transitionX + transitionWidth - 550) {
+        transitioning = true;
     }
+}
+
+// Hide character during transition
+if (transitioning) {
+   character.style.visibility = "hidden"; // Hide character
+} else {
+   character.style.visibility = "visible"; // Show character
+}
+
     pop()
-    // Optional: Example of a moving object, if you want to add movement (e.g., a character)
-    if (x < 90) {
-        x = 90; // Prevent the character from going past the starting point
-        fill(255); // Display the message if the character tries to go left beyond the blocker
-        stroke(255);
-        strokeWeight(5);
+    if(left_direction){
+      x -= 2;
+  }else if(right_direction){
+      x += 12;
+  }
+    // stops character moving past certain points
+    if (x < 512) {
+        x = 512; // Prevent the character from going past the starting point
         fill(196, 88, 99);
         textSize(75);
         noStroke();
-        text('---->', x + 200, floorPos_y - 100);
+        text('---->', x , floorPos_y - 100);
     }
+
+    if (x > 7500) {
+      x = 7500; // Prevent the character from going past the starting point
+  }
 }
