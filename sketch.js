@@ -91,6 +91,11 @@ let transitionPositions = [1800, 4000, 6200]; // Starting x-positions for 3 tran
 let transitionWidth = 1024; // Width of each transition area
 let transitioning = false; // Flag for transition state
 
+//button variables
+let buttonX = 8200;
+let buttonY = 250;
+let buttonWidth = 250; // Width of the button
+let buttonHeight = 50; // Height of the button
 
 function preload() {
     cloudImage = loadImage('assets/clouds.png'); // Load the cloud image
@@ -115,6 +120,7 @@ function setup() {
 
     // Set tree's vertical position
     treePos_y = floorPos_y - 142; // Set to place trees on the ground level
+    
 }
 
 function draw() {
@@ -154,7 +160,9 @@ function draw() {
    noStroke();
    text('The roads eventually disappeared and the water was surrounding us.', 7500 , floorPos_y - 90);
    text('Boats became our only means of travel forcing us to reshape our lives.', 7500 , floorPos_y - 60);
-   text('As I floated past half-submerged homes I wondered ', 7500 , floorPos_y - 30);
+   text('As I floated past half-submerged homes I wondered...', 7500 , floorPos_y - 30);
+   
+
     // Draw the trees
     for (var i = 0; i < trees_x.length; i++) {
         noStroke();
@@ -202,6 +210,13 @@ if (transitioning) {
    character.style.visibility = "visible"; // Show character
 }
 
+   // Draw the button (a simple rectangle)
+   fill(0, 150, 255);
+   rect(buttonX, buttonY, buttonWidth, buttonHeight,20);
+   fill(255);
+   textSize(20);
+   text("How did it come to this?", buttonX+20 , buttonY+30);
+
     pop()
     if(left_direction){
       x -= 2;
@@ -220,4 +235,18 @@ if (transitioning) {
     if (x > 7500) {
       x = 7500; // Prevent the character from going past the starting point
   }
+}
+
+function mousePressed() {
+   let relativeButtonX = buttonX - x;
+   // Check if the mouse is within the button area
+   if (
+      mouseX > relativeButtonX &&
+      mouseX < relativeButtonX + buttonWidth &&
+      mouseY > buttonY &&
+      mouseY < buttonY + buttonHeight
+  ) {
+      window.location.href = "quiz.html"; // Redirect to the desired page
+  }
+  
 }
