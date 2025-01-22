@@ -8,13 +8,12 @@ body {
 }
 
 .Character {
-    width: calc(64px * var(--pixel-size)); /* Match the frame size */
-    height: calc(64px * var(--pixel-size)); /* Match the frame size */
+    width: calc(64px * var(--pixel-size)); 
+    height: calc(64px * var(--pixel-size));
     overflow: hidden; /* Hide the overflow */
     position: relative; /* Make this the reference point for absolute positioning */
-    top: 350px; /* Ensure alignment with .Character */
-    left: 10vw; /* Ensure alignment with .Character */
-    /* background: rebeccapurple; */
+    top: 350px; 
+    left: 10vw; 
 }
 
 .Character_spritesheet {

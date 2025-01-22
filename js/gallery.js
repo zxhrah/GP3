@@ -5,7 +5,7 @@ let buttonWidth = 85; // Width of the button
 let buttonHeight = 90; // Height of the button
 
 // State variables
-let intro = false; // To show storytelling text
+let intro = false; // To show the storytelling text
 let showSureButton = false; // To display the "Sure!" button
 let showHmmButton = false; // To display the "Hmm..." button
 let showSecondText = false; // To show follow-up text after "Hmm..."

@@ -25,7 +25,6 @@ const placeCharacter = () => {
          right_direction = false;
             left_direction = true;
            characterFace.classList.remove('walk-right'); // Remove walk-right if moving left
-
            characterFace.classList.add('walk-left');  // Add walk-left when moving left
         }
      } else {
@@ -35,12 +34,8 @@ const placeCharacter = () => {
         characterFace.classList.remove('walk-right', 'walk-left');
         characterFace.classList.add('standing'); // Add standing class if no key is pressed
      }
-  
-     // Update character position on screen to move left and right
-     //character.style.transform = `translate3d(${x * pixelSize}px, ${y * pixelSize}px, 0)`; //turned off to test - REMOVE LATER
   }
   
-
 // Set up the game loop
 const step = () => {
    placeCharacter();
@@ -48,7 +43,7 @@ const step = () => {
       step();
    })
 }
-step(); // kick off the first step!
+step(); 
 
 /* Direction key state */
 const directions = {
@@ -89,7 +84,7 @@ let cloudImage; // Variable to store the loaded cloud image
 let clouds = [];  // Array to store cloud data
 let transitionPositions = [1800, 4000, 6200]; // Starting x-positions for 3 transitions
 let transitionWidth = 1024; // Width of each transition area
-let transitioning = false; // Flag for transition state
+let transitioning = false; // boolean for transition state
 
 //button variables
 let buttonX = 8200;
@@ -110,17 +105,15 @@ function setup() {
     trees_x = [-700, -300, -50, 110, 370, 900, 1200, 1400, 1600, 1770, 1930, 2200, 2800, 3000, 3300, 3770, 4540, 5540,5770, 6770, 7100, 7300, 7400 ];
 
    // Initialize clouds with positions far off-screen
-   for (let i = 0; i < 250; i++) { // Generate 15 clouds
+   for (let i = 0; i < 250; i++) { // Generate 250 clouds
       clouds.push({
           x: i * 200, // Spread clouds at regular intervals far along the x-axis
           y: random(0, 100), // Fixed vertical range for clouds
           size: random(50, 200) // Random sizes within a range
       });
   }
-
     // Set tree's vertical position
     treePos_y = floorPos_y - 142; // Set to place trees on the ground level
-    
 }
 
 function draw() {
@@ -130,7 +123,7 @@ function draw() {
     rect(0, floorPos_y, width, height / 2); // Draw the ground
     
     push()
-    translate(-x, 0);  // Adjust background scroll based on x position
+    translate(-x, 0);  // Adjust background scroll based on x position - makes it look like the camera is on the character
    // Narration Texts
    //Scene 1
    fill(255);
@@ -162,7 +155,6 @@ function draw() {
    text('Boats became our only means of travel forcing us to reshape our lives.', 7500 , floorPos_y - 60);
    text('As I floated past half-submerged homes I wondered...', 7500 , floorPos_y - 30);
    
-
     // Draw the trees
     for (var i = 0; i < trees_x.length; i++) {
         noStroke();
@@ -189,12 +181,12 @@ function draw() {
   }
 
 // Draw and handle multiple transitions
-transitioning = false; // Reset transition flag for each frame
+transitioning = false; 
 for (let i = 0; i < transitionPositions.length; i++) {
     let transitionX = transitionPositions[i]; // Current transition's x-position
 
     // Draw the transition rectangle
-    fill(0, 0, 0); // Semi-transparent black for the transition effect
+    fill(0, 0, 0); 
     rect(transitionX, 0, transitionWidth, height);
 
     // Check if the character is within the current transition area
@@ -210,7 +202,7 @@ if (transitioning) {
    character.style.visibility = "visible"; // Show character
 }
 
-   // Draw the button (a simple rectangle)
+   // Draw a button
    fill(0, 150, 255);
    rect(buttonX, buttonY, buttonWidth, buttonHeight,20);
    fill(255);
@@ -233,7 +225,7 @@ if (transitioning) {
     }
 
     if (x > 7500) {
-      x = 7500; // Prevent the character from going past the starting point
+      x = 7500; // Prevent the character from going past the ending point
   }
 }
 
@@ -246,7 +238,7 @@ function mousePressed() {
       mouseY > buttonY &&
       mouseY < buttonY + buttonHeight
   ) {
-      window.location.href = "start.html"; // Redirect to the desired page
+      window.location.href = "start.html"; // Redirect to the quiz starting page
   }
   
 }
