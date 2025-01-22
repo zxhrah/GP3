@@ -246,7 +246,7 @@ function mousePressed() {
       mouseY > buttonY &&
       mouseY < buttonY + buttonHeight
   ) {
-      window.location.href = "quiz.html"; // Redirect to the desired page
+      window.location.href = "start.html"; // Redirect to the desired page
   }
   
 }
