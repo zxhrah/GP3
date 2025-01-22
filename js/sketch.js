@@ -221,7 +221,7 @@ if (transitioning) {
     if(left_direction){
       x -= 2;
   }else if(right_direction){
-      x += 12;
+      x += 2;
   }
     // stops character moving past certain points
     if (x < 512) {
