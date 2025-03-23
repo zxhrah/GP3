@@ -79,6 +79,9 @@ document.addEventListener("keyup", (e) => {
 // Variables
 var floorPos_y;
 var Scene1Floor;
+var Scene2Floor;
+var Scene3Floor;
+var Scene4Floor;
 var trees_x;
 var treePos_y;
 let cloudImage; // Variable to store the loaded cloud image
@@ -98,7 +101,10 @@ let drops = [];
 
 function preload() {
     cloudImage = loadImage('assets/clouds.png'); // Load the cloud image
-    Scene1Floor = loadImage('assets/dirt_floor.png'); // Load the cloud image
+    Scene1Floor = loadImage('assets/dirt_floor.png'); // Load the flooring
+    Scene2Floor = loadImage('assets/water_floor.png'); // Load the flooring
+    Scene3Floor = loadImage('assets/water_floor.png'); // Load the flooring
+    Scene4Floor = loadImage('assets/water_floor.png'); // Load the flooring
 }
 
 function setup() {
@@ -134,6 +140,9 @@ function draw() {
    //GROUND DRAWINGs
     //Scene 1 - damp ground
     image(Scene1Floor, 511, floorPos_y-80, width+300, height/2);
+    image(Scene2Floor, 2820, floorPos_y-80, width+300, height/2);
+    image(Scene3Floor, 5021, floorPos_y-80, width+300, height/2);
+    image(Scene4Floor, 7221, floorPos_y-80, width+300, height/2);
     // Narration Texts
    //Scene 1
    fill(255);
@@ -224,10 +233,11 @@ if (transitioning) {
    text("How did it come to this?", buttonX+20 , buttonY+30);
 
     pop()
+    // character speed
     if(left_direction){
       x -= 2;
   }else if(right_direction){
-      x += 2;
+      x += 20;
   }
     // stops character moving past certain points
     if (x < 512) {
