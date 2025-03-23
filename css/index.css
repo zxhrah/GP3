@@ -1,6 +1,6 @@
 :root{
 
-    --pixel-size:1;
+    --pixel-size:2;
 }
 
 body {
@@ -9,11 +9,11 @@ body {
 
 .Character {
     width: calc(64px * var(--pixel-size)); 
-    height: calc(64px * var(--pixel-size)); 
+    height: calc(64px * var(--pixel-size));
     overflow: hidden; /* Hide the overflow */
-    position: relative;
-    top: 350px; 
-    left: 40vw; 
+    position: absolute; /* Make this the reference point for absolute positioning */
+    top: 300px; 
+    left: 16vw; 
 }
 
 .Character_spritesheet {
@@ -34,7 +34,7 @@ body {
         transform: translate3d(0, 0, 0); /* Start at the first sprite */
     }
     100% {
-        transform: translate3d(-192px, 0, 0); /* Move across 3 frames (192px) */
+        transform: translate3d(-384px, 0, 0); /* Move across 3 frames (192px) */
     }
 }
  
@@ -72,7 +72,7 @@ body {
        transform: translate3d(0, 0, 0); /* Start at the first sprite */
     }
     100% {
-       transform: translate3d(-512px, 0, 0); /* Reset to the start */
+       transform: translate3d(-251px, 0, 0); /* Reset to the start */
     }
  }
 
@@ -86,7 +86,161 @@ body {
        transform: translate3d(0, 0, 0); /* Start at the first sprite */
     }
     100% {
-       transform: translate3d(-384px, 0, 0); /* Reset to the start */
+       transform: translate3d(-768px, 0, 0); /* Reset to the start */
     }
  }
  
+ .buttons {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.button {
+	appearance: none;
+	border: none;
+	outline: none;
+	background: none;
+	cursor: pointer;
+
+	font-size: 1rem;
+	font-weight: 700;
+	text-transform: uppercase;
+
+	padding: 0.5rem 0.5rem;
+	border-radius: 0.5rem;
+	background-color: lightblue;
+	color: white;
+	margin-bottom: 2rem;
+}
+
+
+#one {
+	position: absolute;
+   top:25vw;
+   left: 25vw;
+	background-color: transparent;
+	color: orangered;
+	border: 3px solid orangered;
+	transition: 0.4s ease-out;
+}
+
+#one span {
+	position: relative;
+	z-index: 2;
+}
+
+#one:after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 0;
+	width: calc(100% + 2rem);
+	height: calc(100% + 2rem);
+	border-radius: 0.5rem;
+	border: 3px solid orangered;
+	opacity: 0;
+	transition: 0.4s ease-out;
+}
+
+#one:hover {
+	color: forestgreen;
+	border-color: transparent;
+}
+
+#one:hover:after {
+	width: 100%;
+	height: 100%;
+	opacity: 1;
+	border-color: forestgreen;
+}
+
+/* second button */
+
+#two {
+	position: absolute;
+   top:25vw;
+   left: 35vw;
+	background-color: transparent;
+	color: orangered;
+	border: 3px solid orangered;
+	transition: 0.4s ease-out;
+}
+
+#two span {
+	position: relative;
+	z-index: 2;
+}
+
+#two:after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 0;
+	width: calc(100% + 2rem);
+	height: calc(100% + 2rem);
+	border-radius: 0.5rem;
+	border: 3px solid orangered;
+	opacity: 0;
+	transition: 0.4s ease-out;
+}
+
+#two:hover {
+	color: forestgreen;
+	border-color: transparent;
+}
+
+#two:hover:after {
+	width: 100%;
+	height: 100%;
+	opacity: 1;
+	border-color: forestgreen;
+}
+
+/* third button */
+
+#three {
+	position: absolute;
+   top:25vw;
+   left: 25vw;
+	background-color: transparent;
+	color: orangered;
+	border: 3px solid orangered;
+	transition: 0.4s ease-out;
+}
+
+#three span {
+	position: relative;
+	z-index: 2;
+}
+
+#three:after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 0;
+	width: calc(100% + 2rem);
+	height: calc(100% + 2rem);
+	border-radius: 0.5rem;
+	border: 3px solid orangered;
+	opacity: 0;
+	transition: 0.4s ease-out;
+}
+
+#three:hover {
+	color: forestgreen;
+	border-color: transparent;
+}
+
+#three:hover:after {
+	width: 100%;
+	height: 100%;
+	opacity: 1;
+	border-color: forestgreen;
+}

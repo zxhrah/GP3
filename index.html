@@ -4,17 +4,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Character Animation</title>
-  <link rel="stylesheet" href="css/index.css">
+  <title>Welcome to the Gallery</title>
+  <link rel="stylesheet" href="css/index.css"> <!-- Link to CSS file -->
 </head>
 
 <body>
-  <div class="Character">
-    <img class="Character_spritesheet pixelart standing" src="assets/Spritesheet.png" alt="Character" />
- </div>
 
-  <script src="js/sketch.js"></script>
+  <body>
+    <div class="Character">
+      <img class="Character_spritesheet pixelart standing" src="assets/Spritesheet.png" alt="Character" />
+   </div>
+   <div class="buttons">
+    <a href="story.html">
+      <button class="button" id="one">
+        <span>Let's go!</span>
+      </button>
+    </a>
+      <button class="button" id="two">
+        <span>hmm..</span>
+      </button>
+    <a href="story.html">
+      <button class="button" id="three">
+          <span>I've changed my mind</span>
+      </button>
+    </a>
+  </div>
+  
+  
   <script src="p5.min.js"></script>
+  <script src="js/index.js"></script>
 </body>
 
 </html>
